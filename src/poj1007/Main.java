@@ -1,7 +1,34 @@
-package poj1007;
-
 import java.io.*;
+import java.util.*;
 //import java.lang.math;
+
+class S implements Comparable<S>{
+	static int m;
+	String d;
+	int rank;
+	S(String s){
+	    this.rank=0;
+	    d=s;
+	    for(int i=0; i<m-1;i++){
+		if(d.charAt(i)=='A')
+		    continue;
+		for(int j=i+1; j<m;j++){
+		    if(d.charAt(i)> d.charAt(j))
+			this.rank++;
+		}
+	    }
+	}
+	@Override
+	public int compareTo(S o){
+	    if(this.rank > o.rank)
+		return 1;
+	    else if(this.rank < o.rank)
+		return -1;
+	    else
+		return 0;
+	}
+    }
+
 public class Main {
     static int nextInt(java.io.BufferedReader r) throws java.io.IOException {
         int ch;
@@ -38,13 +65,26 @@ public class Main {
 
     public static void main(String[] args) throws java.io.IOException {
         java.io.BufferedReader r= new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        int t=nextInt(r);
+        int n=nextInt(r);
+        assert (n<=50 && n>=0):"n not in limits";
+        int m=nextInt(r);
+        assert (m<=50 && m>0):"m not in limits";
         //long t=nextLong(r);
-        for(int i=0; i<t; i++) {
-            double n=nextDouble(r);
-            System.out.println(n);
+        List<S> list=new ArrayList<S>(m);
+        S.m=n;
+        for(int i=0; i<m; i++) {
+            //double n=nextDouble(r);
+            //System.out.println(n);            
+	    
+            list.add(new S(r.readLine()));            
 
         }
+        //String str="";
+	Collections.sort(list);
+        for(S str:list){
+            System.out.print(str.d);
+	    //System.out.println(str.rank);
+	}
     }
 
 }
